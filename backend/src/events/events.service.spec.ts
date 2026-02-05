@@ -193,6 +193,7 @@ describe('EventsService', () => {
 
       expect(repo.find).toHaveBeenCalledWith(
         expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: expect.objectContaining({
             status: EventStatus.PUBLISHED,
             category: 'tech',
@@ -209,7 +210,9 @@ describe('EventsService', () => {
 
       expect(repo.find).toHaveBeenCalledWith(
         expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: expect.objectContaining({
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             $or: expect.arrayContaining([
               { title: { $regex: 'tech', $options: 'i' } },
               { description: { $regex: 'tech', $options: 'i' } },
@@ -231,6 +234,7 @@ describe('EventsService', () => {
 
       expect(repo.find).toHaveBeenCalledWith(
         expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: expect.objectContaining({
             startDate: {
               $gte: new Date('2026-01-01'),
@@ -279,6 +283,7 @@ describe('EventsService', () => {
 
       expect(repo.find).toHaveBeenCalledWith(
         expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: expect.objectContaining({
             status: EventStatus.PUBLISHED,
           }),
@@ -819,6 +824,7 @@ describe('EventsService', () => {
 
       expect(repo.find).toHaveBeenCalledWith(
         expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: expect.objectContaining({ organizerId: 'org-1' }),
         }),
       );
@@ -835,6 +841,7 @@ describe('EventsService', () => {
 
       expect(repo.find).toHaveBeenCalledWith(
         expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: expect.objectContaining({
             organizerId: 'org-1',
             status: EventStatus.PUBLISHED,

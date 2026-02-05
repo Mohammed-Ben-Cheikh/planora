@@ -259,6 +259,7 @@ describe('ReservationsService', () => {
       const confirmed = {
         ...reservation,
         status: ReservationStatus.CONFIRMED,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         confirmedAt: expect.any(Date),
       };
       repo.save!.mockResolvedValue(confirmed);
@@ -455,6 +456,7 @@ describe('ReservationsService', () => {
       const checkedIn = {
         ...reservation,
         status: ReservationStatus.CHECKED_IN,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         checkedInAt: expect.any(Date),
       };
       repo.save!.mockResolvedValue(checkedIn);
@@ -681,6 +683,7 @@ describe('ReservationsService', () => {
 
       expect(repo.find).toHaveBeenCalledWith(
         expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: expect.objectContaining({
             status: ReservationStatus.CONFIRMED,
             eventId: 'event-1',
@@ -697,6 +700,7 @@ describe('ReservationsService', () => {
 
       expect(repo.find).toHaveBeenCalledWith(
         expect.objectContaining({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: expect.objectContaining({
             reservationNumber: { $regex: 'RES-ABC', $options: 'i' },
           }),
