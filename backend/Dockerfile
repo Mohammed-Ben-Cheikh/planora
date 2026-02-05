@@ -1,0 +1,39 @@
+# Stage 1: Build
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --legacy-peer-deps
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Stage 2: Production
+FROM node:20-alpine AS production
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm ci --omit=dev --legacy-peer-deps
+
+# Copy built application from builder stage
+COPY --from=builder /app/dist ./dist
+
+# Expose the application port
+EXPOSE 3001
+
+# Set environment variables
+ENV NODE_ENV=production
+
+# Start the application
+CMD ["node", "dist/main"]
