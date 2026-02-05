@@ -31,6 +31,7 @@ export default function AdminEventsPage() {
 
   useEffect(() => {
     loadEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
 
   const loadEvents = async () => {

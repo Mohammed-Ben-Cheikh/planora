@@ -9,6 +9,7 @@ import {
   isEventFull,
 } from "@/lib/utils";
 import { Calendar, Euro, MapPin, Users } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 interface EventCardProps {
@@ -27,10 +28,11 @@ export function EventCard({ event }: EventCardProps) {
       {/* Image */}
       <div className="relative h-48 bg-linear-to-br from-blue-500 to-purple-600">
         {event.imageUrl ? (
-          <img
+          <Image
             src={event.imageUrl}
             alt={event.title}
             className="w-full h-full object-cover"
+            fill
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">

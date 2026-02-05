@@ -17,6 +17,7 @@ import {
   Users,
 } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReservationButton } from "./reservation-button";
@@ -98,10 +99,11 @@ export default async function EventPage({ params }: EventPageProps) {
           {/* Image */}
           <div className="relative h-64 md:h-96 bg-linear-to-br from-blue-500 to-purple-600 rounded-xl overflow-hidden mb-6">
             {event.imageUrl ? (
-              <img
+              <Image
                 src={event.imageUrl}
                 alt={event.title}
                 className="w-full h-full object-cover"
+                fill
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">

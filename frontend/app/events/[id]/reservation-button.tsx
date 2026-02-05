@@ -16,7 +16,6 @@ interface ReservationButtonProps {
 
 export function ReservationButton({
   eventId,
-  eventTitle,
   isFull,
   price,
 }: ReservationButtonProps) {

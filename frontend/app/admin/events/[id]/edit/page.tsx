@@ -8,7 +8,7 @@ import type { CreateEventDto, Event } from "@/lib/types";
 import { ArrowLeft, Calendar, Loader2, Save } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 
 interface EditEventPageProps {
   params: Promise<{ id: string }>;
@@ -34,11 +34,7 @@ export default function EditEventPage({ params }: EditEventPageProps) {
     imageUrl: "",
   });
 
-  useEffect(() => {
-    loadEvent();
-  }, [id]);
-
-  const loadEvent = async () => {
+  const loadEvent = useCallback(async () => {
     try {
       setIsLoading(true);
       const data = await api.getAdminEventById(id);
@@ -59,7 +55,11 @@ export default function EditEventPage({ params }: EditEventPageProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    loadEvent();
+  }, [loadEvent]);
 
   const formatDateForInput = (dateString: string) => {
     const date = new Date(dateString);
@@ -140,7 +140,7 @@ export default function EditEventPage({ params }: EditEventPageProps) {
           Retour aux événements
         </Link>
         <h1 className="text-2xl font-bold text-gray-900">
-          Modifier l'événement
+          Modifier l&apos;événement
         </h1>
         <p className="text-gray-600">{event.title}</p>
       </div>
@@ -149,7 +149,7 @@ export default function EditEventPage({ params }: EditEventPageProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
-            Informations de l'événement
+            Informations de l&apos;événement
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -288,7 +288,7 @@ export default function EditEventPage({ params }: EditEventPageProps) {
             {/* Image URL */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                URL de l'image
+                URL de l&apos;image
               </label>
               <Input
                 name="imageUrl"

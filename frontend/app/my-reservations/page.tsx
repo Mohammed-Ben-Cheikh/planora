@@ -195,7 +195,7 @@ export default function MyReservationsPage() {
               Aucune réservation
             </h3>
             <p className="text-gray-500 mb-6">
-              Vous n'avez pas encore réservé d'événement.
+              Vous n&apos;avez pas encore réservé d&apos;événement.
             </p>
             <Link href="/events">
               <Button>Découvrir les événements</Button>

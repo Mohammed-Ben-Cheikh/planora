@@ -97,7 +97,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Vue d'ensemble de votre plateforme</p>
+        <p className="text-gray-600">Vue d&apos;ensemble de votre plateforme</p>
       </div>
 
       {error && (

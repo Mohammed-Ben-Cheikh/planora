@@ -84,9 +84,6 @@ export default function ProfilePage() {
   const confirmedReservations = reservations.filter(
     (r) => r.status === "confirmed" || r.status === "pending",
   );
-  const pastReservations = reservations.filter(
-    (r) => r.status === "checked_in" || r.status === "no_show",
-  );
   const totalSpent = reservations
     .filter((r) => r.status !== "canceled" && r.status !== "refunded")
     .reduce((sum, r) => sum + r.totalPrice, 0);
@@ -173,7 +170,7 @@ export default function ProfilePage() {
             <div className="text-center py-8">
               <Ticket className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-500 mb-4">
-                Vous n'avez pas encore de réservation
+                Vous n&apos;avez pas encore de réservation
               </p>
               <Link href="/events">
                 <Button>Découvrir les événements</Button>

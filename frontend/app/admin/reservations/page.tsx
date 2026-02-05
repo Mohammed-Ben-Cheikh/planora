@@ -28,6 +28,7 @@ export default function AdminReservationsPage() {
 
   useEffect(() => {
     loadReservations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter]);
 
   const loadReservations = async () => {

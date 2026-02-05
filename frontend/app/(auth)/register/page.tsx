@@ -90,7 +90,7 @@ function RegisterForm() {
                 htmlFor="username"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Nom d'utilisateur
+                Nom d&apos;utilisateur
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />

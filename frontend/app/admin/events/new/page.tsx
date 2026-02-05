@@ -86,7 +86,7 @@ export default function NewEventPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
-            Informations de l'événement
+            Informations de l&apos;événement
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -225,7 +225,7 @@ export default function NewEventPage() {
             {/* Image URL */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                URL de l'image
+                URL de l&apos;image
               </label>
               <Input
                 name="imageUrl"
@@ -244,7 +244,7 @@ export default function NewEventPage() {
               </Link>
               <Button type="submit" disabled={isLoading} isLoading={isLoading}>
                 <Save className="h-4 w-4 mr-2" />
-                Créer l'événement
+                Créer l&apos;événement
               </Button>
             </div>
           </form>
