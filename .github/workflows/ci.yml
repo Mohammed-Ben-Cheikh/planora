@@ -157,10 +157,35 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+  frontend-test:
+    name: Frontend - Tests
+    runs-on: ubuntu-latest
+    needs: frontend-install
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Restore node_modules cache
+        uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: frontend-node-modules-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json') }}
+
+      - name: Run tests
+        run: npm run test
+
   frontend-build:
     name: Frontend - Build
     runs-on: ubuntu-latest
-    needs: frontend-lint
+    needs: [frontend-lint, frontend-test]
     defaults:
       run:
         working-directory: frontend
