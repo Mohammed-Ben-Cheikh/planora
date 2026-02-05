@@ -47,7 +47,7 @@ export class ReservationsService {
     this.validateEventForReservation(event);
 
     // Vérifier le surbooking
-    await this.checkOverbooking(event, numberOfTickets);
+    this.checkOverbooking(event, numberOfTickets);
 
     // Vérifier si l'utilisateur a déjà une réservation active pour cet événement
     await this.checkExistingReservation(eventId, userId);
@@ -83,6 +83,7 @@ export class ReservationsService {
   /**
    * Confirmer une réservation
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async confirm(id: string, isSystem = false): Promise<Reservation> {
     const reservation = await this.findById(id);
 
@@ -259,7 +260,7 @@ export class ReservationsService {
     const skip = (page - 1) * limit;
 
     // Construction du filtre
-    const filter: any = {};
+    const filter: Record<string, unknown> = {};
 
     if (status) {
       filter.status = status;
@@ -277,14 +278,15 @@ export class ReservationsService {
       filter.reservationNumber = { $regex: reservationNumber, $options: 'i' };
     }
 
+    const where = filter;
     const [reservations, total] = await Promise.all([
       this.reservationsRepo.find({
-        where: filter,
+        where,
         skip,
         take: limit,
         order: { [sortBy]: sortOrder === 'asc' ? 1 : -1 },
       }),
-      this.reservationsRepo.count(filter),
+      this.reservationsRepo.count(where),
     ]);
 
     // Transform reservations to include nested event object for frontend compatibility
@@ -551,7 +553,7 @@ export class ReservationsService {
     const skip = (page - 1) * limit;
 
     // Construction du filtre
-    const filter: any = {
+    const filter: Record<string, unknown> = {
       eventId: { $in: eventIds },
     };
 
@@ -563,14 +565,15 @@ export class ReservationsService {
       filter.reservationNumber = { $regex: reservationNumber, $options: 'i' };
     }
 
+    const where = filter;
     const [reservations, total] = await Promise.all([
       this.reservationsRepo.find({
-        where: filter,
+        where,
         skip,
         take: limit,
         order: { [sortBy]: sortOrder === 'asc' ? 1 : -1 },
       }),
-      this.reservationsRepo.count(filter),
+      this.reservationsRepo.count(where),
     ]);
 
     // Transform reservations to include nested event object for frontend compatibility
@@ -714,7 +717,10 @@ export class ReservationsService {
     }
   }
 
-  private validateEventForReservation(event: any): void {
+  private validateEventForReservation(event: {
+    status: EventStatus;
+    startDate: Date;
+  }): void {
     if (event.status !== EventStatus.PUBLISHED) {
       throw new BadRequestException(
         'Les réservations ne sont possibles que pour les événements publiés',
@@ -729,10 +735,10 @@ export class ReservationsService {
     }
   }
 
-  private async checkOverbooking(
-    event: any,
+  private checkOverbooking(
+    event: { capacity: number; registeredCount: number },
     numberOfTickets: number,
-  ): Promise<void> {
+  ): void {
     const availableSpots = event.capacity - event.registeredCount;
 
     if (availableSpots < numberOfTickets) {

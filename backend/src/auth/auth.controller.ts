@@ -13,6 +13,7 @@ import { AuthService } from './auth.service';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { RegisterAuthDto } from './dto/register-auth.dto';
 import { JwtAuthGuard } from './guards/auth.guard';
+import type { JwtPayload } from './interfaces';
 
 @Controller('auth')
 @UseGuards(JwtAuthGuard)
@@ -39,7 +40,7 @@ export class AuthController {
   }
 
   @Get('me')
-  getCurrentUser(@CurrentUser() user: any) {
+  getCurrentUser(@CurrentUser() user: JwtPayload) {
     return user;
   }
 

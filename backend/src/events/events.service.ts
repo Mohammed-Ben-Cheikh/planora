@@ -67,7 +67,7 @@ export class EventsService {
     const skip = (page - 1) * limit;
 
     // Construction du filtre
-    const filter: any = {};
+    const filter: Record<string, unknown> = {};
 
     if (status) {
       filter.status = status;
@@ -86,23 +86,25 @@ export class EventsService {
     }
 
     if (startDateFrom || startDateTo) {
-      filter.startDate = {};
+      const dateFilter: Record<string, Date> = {};
       if (startDateFrom) {
-        filter.startDate.$gte = new Date(startDateFrom);
+        dateFilter.$gte = new Date(startDateFrom);
       }
       if (startDateTo) {
-        filter.startDate.$lte = new Date(startDateTo);
+        dateFilter.$lte = new Date(startDateTo);
       }
+      filter.startDate = dateFilter;
     }
 
+    const where = filter;
     const [events, total] = await Promise.all([
       this.eventsRepo.find({
-        where: filter,
+        where,
         skip,
         take: limit,
         order: { [sortBy]: sortOrder === 'asc' ? 1 : -1 },
       }),
-      this.eventsRepo.count(filter),
+      this.eventsRepo.count(where),
     ]);
 
     return {
@@ -321,19 +323,20 @@ export class EventsService {
     const { page = 1, limit = 10, status } = query;
     const skip = (page - 1) * limit;
 
-    const filter: any = { organizerId };
+    const filter: Record<string, unknown> = { organizerId };
     if (status) {
       filter.status = status;
     }
 
+    const where = filter;
     const [events, total] = await Promise.all([
       this.eventsRepo.find({
-        where: filter,
+        where,
         skip,
         take: limit,
         order: { createdAt: -1 },
       }),
-      this.eventsRepo.count(filter),
+      this.eventsRepo.count(where),
     ]);
 
     return {
